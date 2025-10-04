@@ -10,6 +10,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+// const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -43,7 +44,20 @@ app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 
+// const store = MongoStore.create({
+//     mongoUrl: dbUrl,
+//     touchAfter: 24 * 60 * 60,   
+//     crypto: {
+//         secret: process.env.SECRET,
+//     }
+// });
+
+// store.on("error", () => {
+//     console.log("Error  in mongodb store" , err);
+// });
+
 const sessionOptions = {
+    // store,
     secret: process.env.SECRET ,
     resave: false,
     saveUninitialized: true,
@@ -55,8 +69,12 @@ const sessionOptions = {
 };
 
 
+
+
+
 app.get("/", (req, res) => {
-    res.send("Hi, i am root");
+     res.redirect("/listings");
+    // res.send("Hi, i am root");
 });
 
 
